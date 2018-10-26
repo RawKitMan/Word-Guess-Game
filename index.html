@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--<script src="assets/javascript/game.js" type="text/javascript"></script>-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="instructions">Press any key to get started!</p>
+    <p id="current">Current Word</p>
+    <p id="word-guess"></p>
+    <p id="incorrect-header">Incorrect Guesses</p>
+    <p id="incorrect-letters"></p>
+    <p id="guess-count-header"># of Guesses Remaining</p>
+    <p id="guess-chance"></p>
+    <p id="wins-text"></p>
+    <p id="losses-text"></p>
+
+    <script type="text/javascript">
+
+        
+        var wins = 0;
+        var loss = 0;
+        var guessCount = 15;
+        var incorrectGuess = [];
+
+        var instruction = document.getElementById("instructions");
+        var wordGuess = document.getElementById("word-guess");
+        var incLetters = document.getElementById("incorrect-letters")
+        var guessChances = document.getElementById("guess-chance");
+        var winsText = document.getElementById("wins-text");
+        var loseText = document.getElementById("losses-text");
+
+        guessChances.textContent = guessCount;
+
+        
+        var names = {
+            0: "sephiroth",
+            1: "kefka"
+        }
+
+        var answers = ["_________", "_____"];
+
+        var countNames = 0;
+
+
+        var word = names[countNames];
+        var blank = answers[countNames];
+        var correct = [];
+
+        wordGuess.textContent = blank;
+        guessChances.textContent = guessCount;
+        
+        //Need to create a function that finds all instances of a letter and puts it in its proper place
+        //Need to filter out anything other than letters....time for a reg!!!
+
+        document.onkeyup = function(event){
+            instruction.textContent="";
+            var userGuess = event.key;
+
+            if (word.indexOf(userGuess) === -1){
+                incorrectGuess.push(userGuess);
+                guessCount--;
+            }
+            else{
+                correct[word.indexOf(userGuess)] = userGuess;
+            }
+
+            console.log(word.indexOf(userGuess));
+            console.log(blank);
+            
+            incLetters.textContent = incorrectGuess;
+            guessChances.textContent = guessCount;
+            wordGuess.textContent = correct;
+
+        }
+        
+
+        
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
