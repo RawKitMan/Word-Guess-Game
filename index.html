@@ -18,78 +18,119 @@
     <p id="incorrect-letters"></p>
     <p id="guess-count-header"># of Guesses Remaining</p>
     <p id="guess-chance"></p>
-    <p id="wins-text"></p>
-    <p id="losses-text"></p>
+    <p id="win-count"></p>
+    <p id="game-over"></p>
+
 
     <script type="text/javascript">
 
-        
+        function blanks(arr) {
+            var blank = [];
+            for (var i = 0; i < arr.length; i++) {
+                blank.push("_ ");
+            }
+
+            return blank;
+        }
+
+
         var wins = 0;
-        var loss = 0;
-        var guessCount = 15;
+        var guessCount = 10;
         var incorrectGuess = [];
 
         var instruction = document.getElementById("instructions");
         var wordGuess = document.getElementById("word-guess");
         var incLetters = document.getElementById("incorrect-letters")
         var guessChances = document.getElementById("guess-chance");
-        var winsText = document.getElementById("wins-text");
-        var loseText = document.getElementById("losses-text");
+        var winsText = document.getElementById("win-count");
+        var gameOver = document.getElementById("game-over")
 
-        guessChances.textContent = guessCount;
 
-        
         var names = {
-            0: "sephiroth",
-            1: "kefka"
+            0: "SEPHIROTH",
+            1: "KEFKA",
+            2: "CLOUD",
+            3: "TIDUS",
+            4: "SEYMOUR"
         }
 
-        var answers = ["_________", "_____"];
-
-        var countNames = 0;
-
-
-        var word = names[countNames];
-        var blank = answers[countNames];
-        var correct = [];
-
-        wordGuess.textContent = blank;
+        var nameIndex = 0;
+        var word = names[nameIndex].split("");
+        var guess = blanks(word);
+        wordGuess.textContent = guess.join(" ");
         guessChances.textContent = guessCount;
-        
-        //Need to create a function that finds all instances of a letter and puts it in its proper place
-        //Need to filter out anything other than letters....time for a reg!!!
+        winsText.textContent = wins;
 
-        document.onkeyup = function(event){
-            instruction.textContent="";
+        document.onkeyup = function (event) {
+
+            instruction.textContent = "";
             var userGuess = event.key;
+            guessUpper = userGuess.toUpperCase();
 
-            if (word.indexOf(userGuess) === -1){
-                incorrectGuess.push(userGuess);
+
+            if (word.indexOf(guessUpper) === -1) {
+                incorrectGuess.push(guessUpper);
                 guessCount--;
             }
-            else{
-                correct[word.indexOf(userGuess)] = userGuess;
+            else {
+                for (var j = 0; j < guess.length; j++) {
+                    if (word[j] === guessUpper) {
+
+                        guess[j] = guessUpper;
+                    }
+                }
+                guessCount--;
+
             }
 
-            console.log(word.indexOf(userGuess));
-            console.log(blank);
-            
             incLetters.textContent = incorrectGuess;
             guessChances.textContent = guessCount;
-            wordGuess.textContent = correct;
+            wordGuess.textContent = guess.join(" ");
+
+
+            if (nameIndex < Object.keys(names).length) {
+                if (guess.join("") === names[nameIndex]) {
+                    wins++;
+                    nameIndex++;
+                    if (nameIndex === Object.keys(names).length) {
+                        gameOver.textContent = "Game Over";
+
+                    }
+                    else {
+                        guessCount = 10;
+                        word = names[nameIndex];
+                        guess = blanks(word);
+                        incorrectGuess = [];
+
+                    }
+                }
+                else if (guessCount === 0 && guess.join("") !== names[nameIndex]) {
+                    nameIndex++;
+                    if (nameIndex === Object.keys(names).length) {
+                        gameOver.textContent = "Game Over";
+                    }
+                    else {
+                        guessCount = 10;
+                        incorrectGuess = []
+                        word = names[nameIndex];
+                        guess = blanks(word);
+                    }
+                }
+            }
+
+
+
+            console.log(nameIndex);
+            incLetters.textContent = incorrectGuess.join(" ");
+            guessChances.textContent = guessCount;
+            wordGuess.textContent = guess.join(" ");
+            winsText.textContent = wins;
 
         }
-        
-
-        
 
 
 
     </script>
-
-
-
-
 </body>
 
 </html>
