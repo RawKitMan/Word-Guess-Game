@@ -1,0 +1,18 @@
+body{
+    background-image: url("../images/chocobo-wallpaper.png");
+    font-family: 'Righteous', cursive;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+.position{
+    margin-top: 150px !important;
+    border: 10px solid, white;
+    background: linear-gradient(135deg, blue, black);
+
+}
+
+h1{
+    font-family: url("../images/finalf.ttf") format("truetype");
+    font-style: italic;
+}
