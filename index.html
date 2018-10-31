@@ -5,28 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!--<script src="assets/javascript/game.js" type="text/javascript"></script>-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <title>Document</title>
+    <title>Final Fantasy Word-Guess</title>
 </head>
 
 <body>
-    <div class="container text-center">
-        <h1>Final Fantasy Hangman!</h1>
+    <div class="container text-center p-3 rounded-right rounded-top rounded-bottom rounded-left title">
+        <h1>Final Fantasy Word-Guess!</h1>
     </div>
 
-    <div class="container bg-light position rounded-right rounded-top rounded-bottom rounded-left">
+    <div class="container pic-position">
+        <div class="d-flex justify-content-center">
+            <div id="pic"></div>
+        </div>
+    </div>
+
+
+
+    <div class="container position rounded-right rounded-top rounded-bottom rounded-left">
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center border-bottom border-light">
                 <p id="instructions">Press any letter to guess the word!</p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center border-right border-light">
                 <p id="current">Current Word</p>
             </div>
             <div class="col text-center">
@@ -35,7 +42,7 @@
         </div>
 
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center border-right border-light">
                 <p id="incorrect-header">Incorrect Guesses</p>
             </div>
             <div class="col text-center">
@@ -44,7 +51,7 @@
         </div>
 
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center border-right border-light">
                 <p id="guess-count-header"># of Guesses Remaining</p>
             </div>
             <div class="col text-center">
@@ -53,7 +60,7 @@
         </div>
 
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center border-right border-light">
                 <p id="win-count-header">Points</p>
             </div>
             <div class="col text-center">
@@ -61,127 +68,15 @@
             </div>
         </div>
 
-        <p id="game-over"></p>
+        <div class="row">
+            <div class="col text-center border-top border-light">
+                <p id="game-over"></p>
+            </div>
+        </div>
     </div>
 
+    <script src="assets/javascript/game.js" type="text/javascript"></script>
 
-    <script type="text/javascript">
-
-
-
-
-        function blanks(arr) {
-            var blank = [];
-            for (var i = 0; i < arr.length; i++) {
-                blank.push("_ ");
-            }
-
-            return blank;
-        }
-
-
-        var wins = 0;
-        var guessCount = 15;
-        var incorrectGuess = [];
-
-        var instruction = document.getElementById("instructions");
-        var wordGuess = document.getElementById("word-guess");
-        var incLetters = document.getElementById("incorrect-letters")
-        var guessChances = document.getElementById("guess-chance");
-        var winsText = document.getElementById("win-count");
-        var gameOver = document.getElementById("game-over")
-
-
-        var names = {
-            0: "SEPHIROTH",
-            1: "KEFKA",
-            2: "CLOUD",
-            3: "TIDUS",
-            4: "SEYMOUR",
-            5: "CHOCOBO"
-        }
-
-        var nameIndex = 0;
-        var word = names[nameIndex].split("");
-        var guess = blanks(word);
-        wordGuess.textContent = guess.join(" ");
-        guessChances.textContent = guessCount;
-        winsText.textContent = wins;
-
-        document.onkeyup = function (event) {
-
-
-            var userGuess = event.key;
-            guessUpper = userGuess.toUpperCase();
-
-            if (nameIndex === 0) {
-
-            }
-
-
-            if (word.indexOf(guessUpper) === -1) {
-                incorrectGuess.push(guessUpper);
-                guessCount--;
-            }
-            else {
-                for (var j = 0; j < guess.length; j++) {
-                    if (word[j] === guessUpper) {
-
-                        guess[j] = guessUpper;
-                    }
-                }
-                guessCount--;
-
-            }
-
-            incLetters.textContent = incorrectGuess;
-            guessChances.textContent = guessCount;
-            wordGuess.textContent = guess.join(" ");
-
-
-            if (nameIndex < Object.keys(names).length) {
-                if (guess.join("") === names[nameIndex]) {
-                    wins++;
-                    nameIndex++;
-                    if (nameIndex === Object.keys(names).length) {
-                        gameOver.textContent = "Game Over";
-
-                    }
-                    else {
-                        guessCount = 10;
-                        word = names[nameIndex];
-                        guess = blanks(word);
-                        incorrectGuess = [];
-
-                    }
-                }
-                else if (guessCount === 0 && guess.join("") !== names[nameIndex]) {
-                    nameIndex++;
-                    if (nameIndex === Object.keys(names).length) {
-                        gameOver.textContent = "Game Over";
-                    }
-                    else {
-                        guessCount = 10;
-                        incorrectGuess = []
-                        word = names[nameIndex];
-                        guess = blanks(word);
-                    }
-                }
-            }
-
-
-
-            console.log(nameIndex);
-            incLetters.textContent = incorrectGuess.join(" ");
-            guessChances.textContent = guessCount;
-            wordGuess.textContent = guess.join(" ");
-            winsText.textContent = wins;
-
-        }
-
-
-
-    </script>
 </body>
 
 </html>

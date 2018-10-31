@@ -2,14 +2,24 @@ body{
     background-image: url("../images/chocobo-wallpaper.png");
     font-family: 'Righteous', cursive;
     font-size: 2em;
-    color: #ffffff;
+    color: #e2d9d9;
 }
 
-.position{
-    margin-top: 150px !important;
-    border: 10px solid, white;
+.pic-position{
+    margin-top: 25px;
+}
+
+.position, .title{
+    
+    border: 6px solid rgb(247, 243, 243);
     background: linear-gradient(135deg, blue, black);
 
+}
+
+
+.position{
+    margin-top: 75px !important;
+    width: 60%; 
 }
 
 h1{
