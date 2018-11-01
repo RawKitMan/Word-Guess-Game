@@ -13,10 +13,14 @@
 </head>
 
 <body>
+    
+    <!--We are making a word guess game, certainly not Hangman, referencing Final Fantasy...which I learned is not
+    super original. Go me! First, we need a container containing the title-->
     <div class="container text-center p-3 rounded-right rounded-top rounded-bottom rounded-left title">
         <h1>Final Fantasy Word-Guess!</h1>
     </div>
 
+    <!--I provide a picture that gives a clue to what the word is.-->
     <div class="container pic-position">
         <div class="d-flex justify-content-center">
             <div id="pic"></div>
@@ -24,14 +28,17 @@
     </div>
 
 
-
+    <!--This contains our entire game board-->
     <div class="container position rounded-right rounded-top rounded-bottom rounded-left">
+        <!--Instructions. Simple. If a person does not press a letter, the user gets an error message-->
         <div class="row">
             <div class="col text-center border-bottom border-light">
                 <p id="instructions">Press any letter to guess the word!</p>
+                <p id="pick-error"></p>
             </div>
         </div>
 
+        <!--The word being guessed at the moment-->
         <div class="row">
             <div class="col text-center border-right border-light">
                 <p id="current">Current Word</p>
@@ -40,7 +47,8 @@
                 <p id="word-guess"></p>
             </div>
         </div>
-
+        
+        <!--Any incorrect guesses will be listed here-->
         <div class="row">
             <div class="col text-center border-right border-light">
                 <p id="incorrect-header">Incorrect Guesses</p>
@@ -50,6 +58,7 @@
             </div>
         </div>
 
+        <!--You only have so many tries before it moves on to the next word-->
         <div class="row">
             <div class="col text-center border-right border-light">
                 <p id="guess-count-header"># of Guesses Remaining</p>
@@ -59,6 +68,7 @@
             </div>
         </div>
 
+        <!--If you guess the word, you get a point-->
         <div class="row">
             <div class="col text-center border-right border-light">
                 <p id="win-count-header">Points</p>
@@ -68,6 +78,7 @@
             </div>
         </div>
 
+        <!--Once the word list is exhausted, the game is over and it will tell you.-->
         <div class="row">
             <div class="col text-center border-top border-light">
                 <p id="game-over"></p>
