@@ -41,7 +41,7 @@ var incLetters = document.getElementById("incorrect-letters")
 var guessChances = document.getElementById("guess-chance");
 var winsText = document.getElementById("win-count");
 var gameOver = document.getElementById("game-over");
- 
+
 var word = names[nameIndex].split(""); //We split the word into an array to allow for easy comparison
 var guess = blanks(word); //Creating our guess variable initialized with blanks
 
@@ -76,7 +76,7 @@ document.onkeyup = function (event) {
 
     //We only want letters to be entered. Without this condition, keys like . or Enter will register as a guess.
     if (guessUpper.match(letters) && guessUpper.length === 1) {
-        
+
         //If the someone picked a key that is a letter after getting the pick error message, the message should go away
         pickError.textContent = "";
 
@@ -95,26 +95,35 @@ document.onkeyup = function (event) {
                         guess[j] = guessUpper;
                     }
                 }
-                
-
             }
+
+            //For every valid guess made, the count goes down by one
             guessCount--;
         }
     }
-    else{
+    else {
+        //If anything other than a letter is picked, the user will get this mesage
         pickError.textContent = "Pick a letter only";
     }
 
+    //Show all the updated data
     incLetters.textContent = incorrectGuess;
     guessChances.textContent = guessCount;
     wordGuess.textContent = guess.join(" ");
 
 
+    //This is where we start looking at whether or not the word has been guessed or not. We only want to make these checks while
+    //the game is still going on aka still using words in the names object.
     if (nameIndex < Object.keys(names).length) {
+        //If the guess is the same as the names[nameIndex] we refer to, then you get a point
         if (guess.join("") === names[nameIndex]) {
 
-            wins++;
-            nameIndex++;
+            wins++;//here's your point
+            nameIndex++; //we move on to the next word
+
+            //This lengthy beauty helps us change the image for the word that's coming. Note I tried to function this out
+            //and it wouldn't work properly. We want to replace the image, not add it to the previous image. appendChild works 
+            //fine in this particular setup.
             if (nameIndex > 0) {
                 if (nameIndex === 1) {
                     img.src = "assets/images/kefka.jpg";
@@ -166,17 +175,25 @@ document.onkeyup = function (event) {
                 }
 
             }
+
+            //If we used up all the letters, the game is over. 
             if (nameIndex === Object.keys(names).length) {
                 gameOver.textContent = "Game Over";
 
             }
+
+            //Otherwise, reset for the next word
             else {
                 reset();
                 word = names[nameIndex].split("");
                 guess = blanks(word);
             }
         }
+
+        //Now if we didn't guess the word in time....
         else if (guessCount === 0 && guess.join("") !== names[nameIndex]) {
+
+            //We do the same thing as before but we don't give the user a point
             nameIndex++;
 
             if (nameIndex > 0) {
@@ -230,7 +247,7 @@ document.onkeyup = function (event) {
                 }
 
             }
-            
+
             if (nameIndex === Object.keys(names).length) {
                 gameOver.textContent = "Game Over";
             }
@@ -241,7 +258,9 @@ document.onkeyup = function (event) {
             }
 
         }
-        
+
+
+        //Once again update everything!
         incLetters.textContent = incorrectGuess.join(" ");
         guessChances.textContent = guessCount;
         wordGuess.textContent = guess.join(" ");
